@@ -27,5 +27,6 @@
     <module>springboot_message</module>
     <module>springboot_web</module>
     <module>springboot_service</module>
+    <module>springboot_common</module>
   </modules>
 </project>
