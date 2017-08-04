@@ -15,8 +15,11 @@ import com.wylie.springboot.service.entity.UserEntity;
 import com.wylie.springboot.service.mapper.test1.User1Mapper;
 import com.wylie.springboot.service.mapper.test2.User2Mapper;
 
+import io.swagger.annotations.ApiOperation;
+
 
 @RestController
+@RequestMapping("/api")
 public class UserController {
 	
 	private Logger logger =  LoggerFactory.getLogger(this.getClass());
@@ -27,6 +30,7 @@ public class UserController {
 	@Autowired
 	private User2Mapper user2Mapper;
 	
+	@ApiOperation(value="获取用户列表", notes="")
 	@RequestMapping(value ="/getUsers", method = RequestMethod.GET)
 	public ResponseEntity<List<UserEntity>> getUsers() {
 		List<UserEntity> users=user1Mapper.getAll();
