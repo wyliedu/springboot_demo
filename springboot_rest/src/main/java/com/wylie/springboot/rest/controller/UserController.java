@@ -37,29 +37,29 @@ public class UserController {
 		return ResponseEntity.ok(users);
 	}
 	
-	@RequestMapping("/getUsers2")
+	@RequestMapping(value ="/getUsers2", method = RequestMethod.GET)
 	public List<UserEntity> getUsers2() {
 		List<UserEntity> users=user2Mapper.getAll();
 		return users;
 	}
 	
-    @RequestMapping("/getUser")
+    @RequestMapping(value ="/getUser", method = RequestMethod.GET)
     public UserEntity getUser(Long id) {
     	UserEntity user=user2Mapper.getOne(id);
         return user;
     }
     
-    @RequestMapping("/add")
+    @RequestMapping(value ="/add", method = RequestMethod.POST)
     public void save(UserEntity user) {
         user2Mapper.insert(user);
     }
     
-    @RequestMapping(value="update")
+    @RequestMapping(value="update", method = RequestMethod.PUT)
     public void update(UserEntity user) {
         user2Mapper.update(user);
     }
     
-    @RequestMapping(value="/delete/{id}")
+    @RequestMapping(value="/delete/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("id") Long id) {
         user1Mapper.delete(id);
     }
