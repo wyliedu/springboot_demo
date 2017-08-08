@@ -1,5 +1,6 @@
 package com.wylie.springboot.service.datasource;
 
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -11,6 +12,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+
+import com.alibaba.druid.pool.DruidDataSource;
+import com.github.pagehelper.PageHelper;
+
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -24,13 +30,24 @@ public class DataSource2Config {
     @Bean(name = "test2DataSource")
     @ConfigurationProperties(prefix = "spring.datasource.test2")
     public DataSource testDataSource() {
-        return DataSourceBuilder.create().build();
+    	DruidDataSource dataSource = new DruidDataSource();
+    	return dataSource;
+        //return DataSourceBuilder.create().build();
     }
 
     @Bean(name = "test2SqlSessionFactory")
     public SqlSessionFactory testSqlSessionFactory(@Qualifier("test2DataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
+        PageHelper pageHelper = new PageHelper();  
+        Properties props = new Properties();  
+        props.setProperty("reasonable", "true");  
+        props.setProperty("supportMethodsArguments", "true");  
+        props.setProperty("returnPageInfo", "check");  
+        props.setProperty("params", "count=countSql");  
+        pageHelper.setProperties(props);  
+        Interceptor[] plugins =  new Interceptor[]{pageHelper};
+        bean.setPlugins(plugins);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/test2/*.xml"));
         return bean.getObject();
     }

@@ -36,7 +36,7 @@ public class ThymeleafController {
 		return "hello";
 	}
 
-    @RequestMapping("/{lang}")
+    @RequestMapping("/changelanguage/{lang}")
     public String changeSessionLanauage(HttpServletRequest request,HttpServletResponse response,@PathVariable String lang){
               System.out.println(lang);
        LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
