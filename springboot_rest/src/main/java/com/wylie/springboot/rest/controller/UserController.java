@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,9 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wylie.common.dto.CommonData;
+import com.wylie.springboot.service.services.UserService;
 import com.wylie.springboot.service.entity.UserEntity;
+import com.wylie.springboot.service.exception.NotFoundException;
 import com.wylie.springboot.service.mapper.test1.User1Mapper;
 import com.wylie.springboot.service.mapper.test2.User2Mapper;
 import com.wylie.springboot.service.models.InChangePassword;
@@ -37,6 +40,9 @@ public class UserController extends BaseController{
 
 	@Autowired
 	private User2Mapper user2Mapper;
+	
+	@Autowired
+	private UserService userService;
 	
 	@ApiOperation(value="获取用户列表", notes="")
 	@RequestMapping(value ="/getUsers", method = RequestMethod.GET)
@@ -60,20 +66,32 @@ public class UserController extends BaseController{
     	List<UserEntity> users=user1Mapper.getAll();
 		return ResponseEntity.ok(getSuccessOutPojo(users));
     }
-    
+
     @RequestMapping(value ="/add", method = RequestMethod.POST)
-    public void save(UserEntity user) {
+    public void save(@RequestBody UserEntity user) {
+        user1Mapper.insert(user);
+        throw new NotFoundException("9000", "eee");
+    }
+    
+    @RequestMapping(value ="/add2", method = RequestMethod.POST)
+    public void save2(@RequestBody UserEntity user) {
         user2Mapper.insert(user);
+        throw new NotFoundException("9000", "eee");
     }
     
     @RequestMapping(value="update", method = RequestMethod.PUT)
-    public void update(UserEntity user) {
+    public void update(@RequestBody UserEntity user) {
         user2Mapper.update(user);
     }
     
     @RequestMapping(value="/delete/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("id") Long id) {
         user1Mapper.delete(id);
+    }
+    
+    @RequestMapping(value ="/addUserTo2Db", method = RequestMethod.POST)
+    public void addUserTo2Db(@RequestBody UserEntity user) {
+    	this.userService.addUserTo2Db(user);
     }
     
 }

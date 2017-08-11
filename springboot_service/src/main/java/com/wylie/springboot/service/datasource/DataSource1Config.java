@@ -8,6 +8,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -15,8 +16,10 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.pool.xa.DruidXADataSource;
 import com.alibaba.druid.util.DruidDataSourceUtils;
 import com.github.pagehelper.PageHelper;
+import com.mysql.jdbc.jdbc2.optional.MysqlXADataSource;
 
 import java.util.Properties;
 
@@ -31,12 +34,16 @@ import javax.sql.DataSource;
 public class DataSource1Config {
 
     @Bean(name = "test1DataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.test1")
+    //@ConfigurationProperties(prefix = "spring.datasource.test1")
+    @ConfigurationProperties(prefix = "spring.jta.atomikos.datasource.test1")
     @Primary       //@Primary 标志这个 Bean 如果在多个同类 Bean 候选时，该 Bean 优先被考虑
     public DataSource testDataSource() {
-    	DruidDataSource dataSource = new DruidDataSource();
-    	return dataSource;
+    	//DruidDataSource dataSource = new DruidDataSource();
+    	//return dataSource;
+    	
         //return DataSourceBuilder.create().build();
+ 
+    	return new AtomikosDataSourceBean();  
     }
 
     @Bean(name = "test1SqlSessionFactory")
@@ -57,12 +64,12 @@ public class DataSource1Config {
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/test1/*.xml"));
         return bean.getObject();
     }
-
-    @Bean(name = "test1TransactionManager")
+    //配置了Atomikos不需要配这个
+/*    @Bean(name = "test1TransactionManager")
     @Primary
     public DataSourceTransactionManager testTransactionManager(@Qualifier("test1DataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
-    }
+    }*/
 
     @Bean(name = "test1SqlSessionTemplate")
     @Primary

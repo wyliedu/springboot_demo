@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class InChangePassword {
 
-	@NotEmpty
+	@NotEmpty(message="不能为空")
 	@Size(min = 6, max = 12)
 	private String currentPassword;
 

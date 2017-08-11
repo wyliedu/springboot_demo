@@ -6,7 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import com.alibaba.druid.support.http.StatViewServlet;
 
 /**
- * druid数据源状态监控.
+ * druid数据源状态监控.   http://localhost:8092/druid/login.html
  * @author Administrator
  *
  */

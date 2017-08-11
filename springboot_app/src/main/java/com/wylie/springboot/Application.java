@@ -8,6 +8,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 @EnableCaching
 @EnableScheduling
 @EnableWebMvc
+@EnableTransactionManagement
 @ServletComponentScan
 public class Application {
 
