@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -55,9 +56,11 @@ public class UserController extends BaseController{
 	}
 	
 	@RequestMapping(value ="/getUsers2", method = RequestMethod.GET)
+	@Cacheable(value="user-key",key="'allUser'")
 	public List<UserEntity> getUsers2() {
 		PageHelper.startPage(1, 1);  
 		List<UserEntity> users=user2Mapper.getAll();
+		System.out.println("若下面没出现“无缓存的时候调用”字样且能打印出数据表示测试成功");  
 		return users;
 	}
 	
