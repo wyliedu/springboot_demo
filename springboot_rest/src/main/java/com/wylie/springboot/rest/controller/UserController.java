@@ -21,6 +21,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wylie.common.dto.CommonData;
 import com.wylie.springboot.service.services.UserService;
+import com.wylie.springboot.message.rabbit.hello.HelloSender;
+import com.wylie.springboot.message.rabbit.many.NeoSender;
+import com.wylie.springboot.message.rabbit.many.NeoSender2;
 import com.wylie.springboot.service.entity.UserEntity;
 import com.wylie.springboot.service.exception.NotFoundException;
 import com.wylie.springboot.service.mapper.test1.User1Mapper;
@@ -44,6 +47,15 @@ public class UserController extends BaseController{
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private HelloSender helloSender;
+	
+	@Autowired
+	private NeoSender neoSender;
+	
+	@Autowired
+	private NeoSender2 neoSender2;
 	
 	@ApiOperation(value="获取用户列表", notes="")
 	@RequestMapping(value ="/getUsers", method = RequestMethod.GET)
@@ -97,4 +109,17 @@ public class UserController extends BaseController{
     	this.userService.addUserTo2Db(user);
     }
     
+	@RequestMapping(value ="/testMQ", method = RequestMethod.GET)
+	public void testMQ() {
+		for (int i=0;i<10;i++){
+			this.helloSender.send();
+		}
+/*		for (int i=0;i<100;i++){
+			neoSender.send(i);
+		}
+		for (int i=0;i<100;i++){
+			neoSender.send(i);
+			neoSender2.send(i);
+		}*/
+	}
 }
