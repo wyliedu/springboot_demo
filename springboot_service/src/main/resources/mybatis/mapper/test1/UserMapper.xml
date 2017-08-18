@@ -26,7 +26,8 @@
 	   WHERE id = #{id}
     </select>
 
-    <insert id="insert" parameterType="com.wylie.springboot.service.entity.UserEntity" >
+	<!-- 返回该条记录的自增主键值 -->
+    <insert id="insert" parameterType="com.wylie.springboot.service.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
        INSERT INTO 
        		users
        		(userName,passWord,user_sex) 

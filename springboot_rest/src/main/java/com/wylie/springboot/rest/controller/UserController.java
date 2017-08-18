@@ -84,7 +84,7 @@ public class UserController extends BaseController{
 
     @RequestMapping(value ="/add", method = RequestMethod.POST)
     public void save(@RequestBody UserEntity user) {
-        user1Mapper.insert(user);
+        int i = user1Mapper.insert(user);
         throw new NotFoundException("9000", "eee");
     }
     
