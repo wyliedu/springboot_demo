@@ -8,9 +8,7 @@
 		<artifactId>springboot</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>com.wylie</groupId>
 	<artifactId>springboot_app</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>springboot_app</name>
 	<url>http://maven.apache.org</url>
 	<properties>

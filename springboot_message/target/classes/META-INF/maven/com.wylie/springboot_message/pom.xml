@@ -8,9 +8,7 @@
 		<artifactId>springboot</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>com.wylie</groupId>
 	<artifactId>springboot_message</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>springboot_message</name>
 	<url>http://maven.apache.org</url>
 	<properties>
@@ -25,12 +23,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-amqp</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>
